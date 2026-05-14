@@ -5,7 +5,7 @@ export default function Dashboard() {
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    getDashboardStats().then((r) => setStats(r.data)).catch(console.error);
+    getDashboardStats().then(setStats).catch(console.error);
   }, []);
 
   if (!stats) return <div className="loading">Loading...</div>;

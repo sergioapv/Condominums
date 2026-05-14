@@ -69,7 +69,7 @@ export default function Units() {
   const [units, setUnits] = useState([]);
   const [modal, setModal] = useState(null);
 
-  const load = () => getUnits().then((r) => setUnits(r.data));
+  const load = () => getUnits().then(setUnits).catch(console.error);
   useEffect(() => { load(); }, []);
 
   const handleSave = async (form) => {

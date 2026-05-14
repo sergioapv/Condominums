@@ -85,8 +85,8 @@ export default function Residents() {
   const [modal, setModal] = useState(null);
 
   const load = () => {
-    getResidents().then((r) => setResidents(r.data));
-    getUnits().then((r) => setUnits(r.data));
+    getResidents().then(setResidents).catch(console.error);
+    getUnits().then(setUnits).catch(console.error);
   };
   useEffect(() => { load(); }, []);
 

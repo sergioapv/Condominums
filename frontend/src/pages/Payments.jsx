@@ -81,8 +81,8 @@ export default function Payments() {
   const [filter, setFilter] = useState("all");
 
   const load = () => {
-    getPayments().then((r) => setPayments(r.data));
-    getResidents().then((r) => setResidents(r.data));
+    getPayments().then(setPayments).catch(console.error);
+    getResidents().then(setResidents).catch(console.error);
   };
   useEffect(() => { load(); }, []);
 
