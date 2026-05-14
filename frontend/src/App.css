@@ -269,3 +269,63 @@ input:focus, select:focus, textarea:focus {
 
 .loading { padding: 60px; text-align: center; color: #718096; font-size: 16px; }
 .empty { padding: 40px; text-align: center; color: #a0aec0; }
+
+/* Setup screen */
+.setup-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;
+}
+
+.setup-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 48px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+}
+
+.setup-card h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 8px;
+}
+
+.setup-subtitle {
+  color: #e53e3e;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.setup-card ol {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #4a5568;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.setup-card code {
+  background: #edf2f7;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #2d3748;
+}
+
+.setup-card pre {
+  background: #1a202c;
+  color: #a0eec0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-top: 8px;
+  line-height: 1.7;
+  overflow-x: auto;
+}
