@@ -1,12 +1,6 @@
 [build]
-  base = "frontend"
-  command = "npm run build"
-  publish = "dist"
-
-[build.environment]
-  NODE_VERSION = "22"
-  # Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in the Netlify dashboard
-  # under Site configuration → Environment variables.
+  publish = "public"
+  command = "echo \"window.SUPABASE_URL='$VITE_SUPABASE_URL'; window.SUPABASE_ANON_KEY='$VITE_SUPABASE_ANON_KEY';\" > public/config.js"
 
 [[redirects]]
   from = "/*"

@@ -1,29 +1,5 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.egg-info/
-dist/
-build/
-.eggs/
-backend/db.sqlite3
-backend/condominums_backend/__pycache__/
-backend/api/__pycache__/
-backend/api/migrations/__pycache__/
+# Supabase local credentials (use config.example.js as template)
+public/config.js
 
-# Node
-frontend/node_modules/
-frontend/dist/
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
+# Node (no longer used but just in case)
+node_modules/
