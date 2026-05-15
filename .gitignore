@@ -1,5 +1,1 @@
-# Supabase local credentials (use config.example.js as template)
-public/config.js
-
-# Node (no longer used but just in case)
 node_modules/

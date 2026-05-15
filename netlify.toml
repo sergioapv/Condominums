@@ -1,6 +1,11 @@
 [build]
   publish = "public"
-  command = "echo \"window.SUPABASE_URL='$VITE_SUPABASE_URL'; window.SUPABASE_ANON_KEY='$VITE_SUPABASE_ANON_KEY';\" > public/config.js"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/:resource"
+  to = "/.netlify/functions/:resource"
+  status = 200
 
 [[redirects]]
   from = "/*"

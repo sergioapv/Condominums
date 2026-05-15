@@ -12,11 +12,11 @@
     <div class="setup-card">
       <div class="setup-icon">🏢</div>
       <h1>Condominums</h1>
-      <p class="setup-error">Supabase is not configured.</p>
-      <p>Create <code>public/config.js</code> with:</p>
-      <pre>window.SUPABASE_URL = "https://your-project.supabase.co";
-window.SUPABASE_ANON_KEY = "your-anon-key";</pre>
-      <p>Then refresh.</p>
+      <p class="setup-error">Backend not configured.</p>
+      <p>Add these environment variables in your Netlify dashboard:</p>
+      <pre>SUPABASE_URL
+SUPABASE_SERVICE_KEY</pre>
+      <p>Then trigger a new deploy.</p>
     </div>
   </div>
 
@@ -51,12 +51,10 @@ window.SUPABASE_ANON_KEY = "your-anon-key";</pre>
     <main id="content"></main>
   </div>
 
-  <div id="overlay" class="overlay hidden" id="overlay">
+  <div id="overlay" class="overlay hidden">
     <div id="modal" class="modal"></div>
   </div>
 
-  <script src="config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="app.js"></script>
 </body>
 </html>
