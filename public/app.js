@@ -16,19 +16,37 @@ async function api(path, options = {}) {
   return data;
 }
 
+// ── Connection status ─────────────────────────────────────────────────────────
+
+function setStatus(state, label, detail = '') {
+  const el = $('#conn-status');
+  el.className = 'conn-status ' + state;
+  $('.conn-label', el).textContent = label;
+  let d = $('.conn-detail', el);
+  if (detail) {
+    if (!d) { d = document.createElement('div'); d.className = 'conn-detail'; el.appendChild(d); }
+    d.textContent = detail;
+  } else if (d) {
+    d.remove();
+  }
+}
+
 // ── Boot ─────────────────────────────────────────────────────────────────────
 
 (async () => {
+  $('#app').classList.remove('hidden');
+  setStatus('', 'Checking…');
   try {
     await api('/dashboard');
-    $('#app').classList.remove('hidden');
+    setStatus('ok', 'Connected');
     router();
     window.addEventListener('hashchange', router);
   } catch (err) {
     if (err.message.includes('503') || err.message.includes('not set')) {
+      $('#app').classList.add('hidden');
       $('#setup').classList.remove('hidden');
     } else {
-      $('#app').classList.remove('hidden');
+      setStatus('err', 'Backend error', err.message);
       router();
       window.addEventListener('hashchange', router);
     }
@@ -114,11 +132,24 @@ const TYPE_BADGE = {
   late_fee:           '<span class="badge badge-red">Late Fee</span>',
 };
 
+// ── Error renderer ───────────────────────────────────────────────────────────
+
+function showError(err) {
+  setStatus('err', 'Backend error', err.message);
+  $('#content').innerHTML = `
+    <div class="error-state">
+      <p>⚠️ Failed to load data</p>
+      <p class="error-detail">${esc(err.message)}</p>
+      <button class="btn btn-outline" onclick="reload()">Retry</button>
+    </div>`;
+}
+
 // ── Dashboard ────────────────────────────────────────────────────────────────
 
 async function renderDashboard() {
   $('#content').innerHTML = '<div class="loading">Loading…</div>';
-  const s = await api('/dashboard');
+  let s;
+  try { s = await api('/dashboard'); } catch (err) { return showError(err); }
   $('#content').innerHTML = `
     <div class="page-header"><h2>Dashboard</h2></div>
     <div class="stats-grid">
@@ -144,7 +175,8 @@ function stat(label, value, color = '') {
 
 async function renderUnits() {
   $('#content').innerHTML = '<div class="loading">Loading…</div>';
-  const units = await api('/units');
+  let units;
+  try { units = await api('/units'); } catch (err) { return showError(err); }
   const rows = units.map(u => `<tr>
     <td class="cell-name">${esc(u.number)}</td>
     <td>${esc(u.floor)}</td>
@@ -204,7 +236,8 @@ function unitForm(u) {
 
 async function renderResidents() {
   $('#content').innerHTML = '<div class="loading">Loading…</div>';
-  const [residents, units] = await Promise.all([api('/residents'), api('/units')]);
+  let residents, units;
+  try { [residents, units] = await Promise.all([api('/residents'), api('/units')]); } catch (err) { return showError(err); }
   const rows = residents.map(r => `<tr>
     <td class="cell-name">${esc(r.first_name)} ${esc(r.last_name)}</td>
     <td>${esc(r.email)}</td>
@@ -267,7 +300,8 @@ let payFilter = 'all';
 
 async function renderPayments() {
   $('#content').innerHTML = '<div class="loading">Loading…</div>';
-  const [all, residents] = await Promise.all([api('/payments'), api('/residents')]);
+  let all, residents;
+  try { [all, residents] = await Promise.all([api('/payments'), api('/residents')]); } catch (err) { return showError(err); }
   const payments = payFilter === 'all' ? all : all.filter(p => p.status === payFilter);
 
   const rows = payments.map(p => `<tr>
